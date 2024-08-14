@@ -1,5 +1,6 @@
 import { makeAutoObservable } from "mobx";
 
+
 class PortfolioStore {
   portfolios = [];
 
@@ -14,15 +15,18 @@ class PortfolioStore {
     this.portfolios = data;
   }
 
-  async addPortfolio(newPortoflio: any) {
+  async addPortfolio(newPortfolio: FormData) {
     // Add a new item to the API
-    await fetch("http://localhost:5000/portfolios", {
-      method: "POST",
-      body: JSON.stringify(newPortoflio),
-      headers: {
-        "Content-Type": "application/json",
-      },
-    });
+    try {
+      await fetch("http://localhost:5000/portfolios", {
+        method: "POST",
+        body: newPortfolio
+      });
+      this.fetchPortfolios();
+    } catch (error) {
+      console.error('Error uploading portfolio item:', error);
+      alert('Failed to add portfolio item. Please try again.');
+    }
     this.fetchPortfolios();
   }
 

@@ -6,6 +6,7 @@ import portfolioStore from "../../store";
 
 const PortfolioCard = observer((props: { type: any; portfolio: any }) => {
     const { type, portfolio } = props;
+    // const skills = JSON.parse(portfolio?.skills);
 
     const handleStatus = () => {
         const updateItem = { ...portfolio, status: !portfolio.status }
@@ -14,7 +15,7 @@ const PortfolioCard = observer((props: { type: any; portfolio: any }) => {
     return (
         <div className={`card ${type}`}>
             <div className="media">
-                <img src={"/img/image.avif"} alt="" />
+                <img src={`http://127.0.0.1:5000/uploads/${portfolio.image}`} alt="" />
             </div>
             <div className="main-body">
                 <h1 className="title">

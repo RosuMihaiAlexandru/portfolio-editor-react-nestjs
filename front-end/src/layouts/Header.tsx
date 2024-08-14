@@ -5,7 +5,7 @@ import CreateModal from "../components/CreateModal";
 
 export default function Header(props: { setViewType: any; }) {
     const [open, setOpen] = useState(false);
-    const [type, setType] = useState('grid')
+    const [type, setType] = useState('list')
     const { setViewType } = props;
 
     const handleOpenModal = () => {

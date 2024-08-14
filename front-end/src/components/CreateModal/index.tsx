@@ -65,15 +65,33 @@ const CreateModal = observer((props: { open: any; onCloseModal: any; }) => {
         }
     };
 
-    const onSubmit = (e: { preventDefault: () => void; }) => {
-        // Your submission logic here
+    const onSubmit = async (e: { preventDefault: () => void; }) => {
         e.preventDefault();
-        // Handle form submission logic here
-        console.log(formData);
-        portfolioStore.addPortfolio(formData);
-        onCloseModal(true)
-    };
 
+        const formDataObj = new FormData();
+        (Object.keys(formData) as Array<keyof typeof formData>).forEach(key => {
+            if (key === 'skills') {
+                formDataObj.append(key, JSON.stringify(formData[key])); // Convert array to JSON string
+            } else if (key === 'image') {
+                if (formData.image) {
+                    formDataObj.append(key, formData.image);
+                }
+            } else {
+                formDataObj.append(key, (formData[key] as string | boolean).toString());
+            }
+        });
+
+        await portfolioStore.addPortfolio(formDataObj);
+        onCloseModal(true);
+        setFormData({
+            title: '',
+            description: '',
+            livelink: '',
+            skills: [],
+            image: null,
+            status: true
+        });
+    };
     return (
         <Modal open={open} onClose={onCloseModal} center classNames={{
             overlay: 'customOverlay',
@@ -92,13 +110,6 @@ const CreateModal = observer((props: { open: any; onCloseModal: any; }) => {
                                     name="title"
                                     value={formData.title}
                                     onChange={handleChange}
-                                    // {...register('title', {
-                                    //     required: 'Title is required',
-                                    //     minLength: {
-                                    //         value: 3,
-                                    //         message: 'Title must be at least 3 characters',
-                                    //     },
-                                    // })}
                                     className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-xl sm:leading-6"
                                 />
                             </div>
@@ -123,7 +134,7 @@ const CreateModal = observer((props: { open: any; onCloseModal: any; }) => {
                                 </label>
                                 <div className="mt-2">
                                     <input
-                                        type="text" 
+                                        type="text"
                                         name="livelink"
                                         value={formData.livelink}
                                         onChange={handleChange}
@@ -150,7 +161,7 @@ const CreateModal = observer((props: { open: any; onCloseModal: any; }) => {
 
                                         }}
                                     />
-                                    
+
                                 </div>
                             </div>
                         </div>
@@ -160,12 +171,12 @@ const CreateModal = observer((props: { open: any; onCloseModal: any; }) => {
                             </label>
                             {formData.image ? (
                                 <div
-                                    className="mt-2 flex flex-1 items-center justify-center rounded-lg border border-gray-900/25 overflow-hidden relative"
+                                    className="mt-2 flex flex-1 items-center justify-center rounded-lg border border-gray-900/25 relative"
                                     onMouseLeave={() => setHovered(false)}
                                     onMouseEnter={() => setHovered(true)}
                                 >
                                     {hovered &&
-                                        <div className="absolute flex top-0 left-0 w-full h-full bg-[#0000008f] items-center justify-center z-10">
+                                        <div className="absolute flex top-0 left-0 w-full h-full bg-[#0000008f] bg-none items-center justify-center z-10">
                                             <label
                                                 htmlFor="file-upload"
                                                 className="bg-[#fff] w-[60px] h-[60px] flex items-center justify-center border border-[#0cb60c] text-[#0cb60c] rounded-full cursor-pointer"
@@ -175,9 +186,7 @@ const CreateModal = observer((props: { open: any; onCloseModal: any; }) => {
                                             </label>
                                             {/* <button className=""><LuReplaceAll/></button> */}
                                         </div>}
-                                    <img src={URL.createObjectURL(formData.image)} alt="Uploaded" className="w-full h-full z-0" />
-
-
+                                    <img src={URL.createObjectURL(formData.image)} alt="Uploaded" className="w-full h-full z-2 visible" />
                                 </div>
                             ) : (
                                 <div className="mt-2 flex flex-1 items-center justify-center rounded-lg border border-dashed border-gray-900/25 px-6 py-10 ">

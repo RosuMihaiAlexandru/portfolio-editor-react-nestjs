@@ -2,6 +2,7 @@ import {
     IsString,
     IsNotEmpty,
     IsArray,
+    IsOptional
 } from 'class-validator';
 export class CreatePortfolioDto {
     @IsString()
@@ -16,8 +17,12 @@ export class CreatePortfolioDto {
 
     "status": boolean;
 
-    @IsArray()
+    // @IsArray()
     "skills": string[];
+
+    @IsOptional()
+    @IsString()
+    image: string;
 
 
 }

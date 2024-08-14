@@ -20,7 +20,7 @@ const PortfolioCard = observer((props: { type: any; portfolio: any }) => {
                     {portfolio.title}
                 </h1>
                 <div className="description text-[22px] mb-5 text-justify max-md:text-xl max-sm:text-[12px]">
-                    {portfolio.description} This is description. This is description. This is description. This is description. This is description. This is description. This is description.
+                    {portfolio.description}
                 </div>
                 <div className="techs flex flex-wrap gap-1">
                     {portfolio.skills.map((skill: any, index: any) => (

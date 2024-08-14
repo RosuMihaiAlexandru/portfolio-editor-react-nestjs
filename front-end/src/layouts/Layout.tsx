@@ -23,18 +23,20 @@ const Layout = observer(() => {
     }
 
     return (
-        <div className='layout'>
+        <div className='flex flex-col w-[100vw] min-h-[100vh] max-w-[1440px] mx-auto'>
             <Header setViewType={setViewType} />
             {!portfolioStore.portfolios.length ? (
-                <div className="flex-1 py-10 text-[28px] text-white text-center">No items</div>
+                <div className="flex-1 py-10 text-[28px] md:text-lg sm:text-base text-white text-center">No items</div>
             ) : (
-                <div className={`content ${viewType}`}>{
-                    portfolioStore.portfolios.map((portfolio, index) => (
+                <div className={`content ${viewType === 'grid' ? 'grid grid-cols-3' : 'flex flex-col'} gap-5 flex-1 p-10 w-full`}>
+                    {portfolioStore.portfolios.map((portfolio, index) => (
                         <PortfolioCard key={index} type={viewType} portfolio={portfolio} />
                     ))}
-                </div>)}
+                </div>
+            )}
             <Footer />
         </div>
+
     )
 })
 

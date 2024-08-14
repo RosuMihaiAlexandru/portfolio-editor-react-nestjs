@@ -6,7 +6,7 @@ import Animation from './components/Animation';
 function App() {
   return (
     <>
-    <Animation />
+      <Animation />
       <Layout />
     </>
   );

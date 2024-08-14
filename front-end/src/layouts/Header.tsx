@@ -16,11 +16,17 @@ export default function Header(props: { setViewType: any; }) {
     }
 
     return (
-        <div className='header'>
-            <button className='primary' onClick={handleOpenModal}><FaPlus /> Create New</button>
-            <div className='button-group'>
-                <button className={`secondary icon ${type === 'list' && 'active'}`} onClick={() => { setViewType('list'); setType('list') }}><FaList /></button>
-                <button className={`secondary icon ${type === 'grid' && 'active'}`} onClick={() => { setViewType('grid'); setType('grid') }}><BsFillGridFill /></button>
+        <div className="flex flex-col md:flex-row justify-between w-full py-8 lg:px-8">
+            <button className="btn btn-primary mb-4 md:mb-0" onClick={handleOpenModal}>
+                <FaPlus /> Create New
+            </button>
+            <div className="flex gap-2">
+                <button className={`btn btn-secondary ${type === 'list' && 'active'}`} onClick={() => { setViewType('list'); setType('list') }}>
+                    <FaList />
+                </button>
+                <button className={`btn btn-secondary ${type === 'grid' && 'active'}`} onClick={() => { setViewType('grid'); setType('grid') }}>
+                    <BsFillGridFill />
+                </button>
             </div>
             <CreateModal open={open} onCloseModal={handleCloseModal} />
         </div>

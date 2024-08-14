@@ -209,7 +209,7 @@ const CreateModal = observer((props: { open: any; onCloseModal: any; }) => {
                         </div>
                     </div>
 
-                    <button type="submit" className="bg-[#7e22ce] float-right">Submit</button>
+                    <button type="submit" className="btn btn-secondary float-right">Submit</button>
                 </div>
 
             </form>
